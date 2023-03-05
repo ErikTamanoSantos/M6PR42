@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerConnection">
+   <children>
+      <Label layoutX="40.0" layoutY="139.0" text="Servidor:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <AnchorPane prefHeight="40.0" prefWidth="400.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <MenuBar layoutY="2.0" prefHeight="40.0" prefWidth="400.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <TextField fx:id="field_server" layoutX="40.0" layoutY="173.0" prefHeight="26.0" prefWidth="323.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" />
+      <Label layoutX="40.0" layoutY="255.0" text="Port:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="field_port" layoutX="38.0" layoutY="287.0" prefHeight="26.0" prefWidth="323.0" />
+      <Button fx:id="button_connect" layoutX="40.0" layoutY="443.0" mnemonicParsing="false" onAction="#connect_action" prefHeight="30.0" prefWidth="264.0" text="Connectar" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" />
+   </children>
+</AnchorPane>

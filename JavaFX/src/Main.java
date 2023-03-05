@@ -12,16 +12,16 @@ public class Main extends Application {
 
     public static UtilsWS socketClient;
 
-    public static int port = 3000;
-    public static String protocol = "http";
-    public static String host = "localhost";
-    public static String protocolWS = "ws";
+    //public static int port = 3000;
+    //public static String protocol = "http";
+    //public static String host = "server-production-0c9b.up.railway.app";
+    //public static String protocolWS = "ws";
 
     // Exemple de configuració per Railway
-    // public static int port = 443;
-    // public static String protocol = "https";
-    // public static String host = "server-production-46ef.up.railway.app";
-    // public static String protocolWS = "wss";
+     public static int port = 443;
+     public static String protocol = "https";
+     public static String host = "server-production-46ef.up.railway.app";
+     public static String protocolWS = "wss";
 
     // Camps JavaFX a modificar
     public static Label consoleName = new Label();
@@ -31,6 +31,17 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
+        socketClient = UtilsWS.getSharedInstance(protocolWS + "://" + host + ":" + port);
+        socketClient.onMessage((response) -> {
+            
+            // JavaFX necessita que els canvis es facin des de el thread principal
+            Platform.runLater(()->{ 
+                // Fer aquí els canvis a la interficie
+                JSONObject msgObj = new JSONObject(response);
+                Controller1 ctrl = (Controller1) UtilsViews.getController("View1");
+                ctrl.receiveMessage(msgObj);
+            });
+        });
         // Iniciar app JavaFX   
         launch(args);
     }
@@ -38,13 +49,12 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        final int windowWidth = 800;
+        final int windowWidth = 400;
         final int windowHeight = 600;
 
         UtilsViews.parentContainer.setStyle("-fx-font: 14 arial;");
-        UtilsViews.addView(getClass(), "ViewPost", "./assets/viewPost.fxml");
-        UtilsViews.addView(getClass(), "ViewSockets", "./assets/viewSockets.fxml");
-        UtilsViews.addView(getClass(), "ViewUpload", "./assets/viewUpload.fxml");
+        UtilsViews.addView(getClass(), "ViewConnection", "./assets/viewConnection.fxml");
+        UtilsViews.addView(getClass(), "ViewForm", "./assets/viewForm.fxml");
 
         Scene scene = new Scene(UtilsViews.parentContainer);
         
@@ -60,19 +70,6 @@ public class Main extends Application {
             Image icon = new Image("file:./assets/icon.png");
             stage.getIcons().add(icon);
         }
-
-        // Iniciar WebSockets
-        socketClient = UtilsWS.getSharedInstance(protocolWS + "://" + host + ":" + port);
-        socketClient.onMessage((response) -> {
-            
-            // JavaFX necessita que els canvis es facin des de el thread principal
-            Platform.runLater(()->{ 
-                // Fer aquí els canvis a la interficie
-                JSONObject msgObj = new JSONObject(response);
-                CtrlSockets ctrl = (CtrlSockets) UtilsViews.getController("ViewSockets");
-                ctrl.receiveMessage(msgObj);
-            });
-        });
     }
 
     @Override
